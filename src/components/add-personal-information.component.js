@@ -130,6 +130,7 @@ export default class CreateExercise extends Component {
               value={this.state.CV}
               onChange={this.onChangeCV}
             />
+            <input type="file" name="file" onChange={this.onChangeHandler} />
           </div>
           <div className="form-group">
             <input
