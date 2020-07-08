@@ -9,7 +9,7 @@ const Exercise = (props) => (
     <td>{props.exercise.Phone}</td>
     <td>{props.exercise.CV}</td>
     <td>
-      <Link to={"/edit/" + props.exercise._id}>edit</Link> |{" "}
+      <Link to={"/edit/" + props.exercise._id}>i</Link> |{" "}
       <a
         href="#"
         onClick={() => {
