@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const info = (props) => (
+const Exercise = (props) => (
   <tr>
-    <td>{props.info.username}</td>
-    <td>{props.info.Email}</td>
-    <td>{props.info.Phone}</td>
-    <td>{props.info.CV /*.substring(0, 10)*/}</td>
+    <td>{props.exercise.username}</td>
+    <td>{props.exercise.Email}</td>
+    <td>{props.exercise.Phone}</td>
+    <td>{props.exercise.CV}</td>
     <td>
-      <Link to={"/edit/" + props.info._id}>edit</Link> |{" "}
+      <Link to={"/edit/" + props.exercise._id}>edit</Link> |{" "}
       <a
         href="#"
         onClick={() => {
-          props.deleteinfo(props.info._id);
+          props.deleteExercise(props.exercise._id);
         }}
       >
         delete
@@ -22,41 +22,43 @@ const info = (props) => (
   </tr>
 );
 
-export default class infoList extends Component {
+export default class ExercisesList extends Component {
   constructor(props) {
     super(props);
-    //this.deleteinfo = this.deleteinfo.bind(this);
-    this.state = { info: [] };
+
+    this.deleteExercise = this.deleteExercise.bind(this);
+
+    this.state = { exercises: [] };
   }
 
   componentDidMount() {
     axios
       .get("http://localhost:3000/info/")
       .then((response) => {
-        this.setState({ info: response.data });
+        this.setState({ exercises: response.data });
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  deleteimfo(id) {
+  deleteExercise(id) {
     axios.delete("http://localhost:3000/info/" + id).then((response) => {
       console.log(response.data);
     });
 
     this.setState({
-      info: this.state.info.filter((el) => el._id !== id),
+      exercises: this.state.exercises.filter((el) => el._id !== id),
     });
   }
 
-  infoList() {
-    return this.state.info.map((currentinfo) => {
+  exerciseList() {
+    return this.state.exercises.map((currentexercise) => {
       return (
-        <info
-          info={currentinfo}
-          deleteinfo={this.deleteinfo}
-          key={currentinfo._id}
+        <Exercise
+          exercise={currentexercise}
+          deleteExercise={this.deleteExercise}
+          key={currentexercise._id}
         />
       );
     });
@@ -65,18 +67,18 @@ export default class infoList extends Component {
   render() {
     return (
       <div>
-        <h3>Logged info</h3>
+        <h3>Logged Exercises</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>
               <th>Username</th>
               <th>Email</th>
-              <th>Phone</th>
+              <th>Phone </th>
               <th>CV</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>{this.infoList()}</tbody>
+          <tbody>{this.exerciseList()}</tbody>
         </table>
       </div>
     );
